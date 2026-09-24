@@ -1,0 +1,2049 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tu Vida, Tus Decisiones</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f472b6',
+                            400: '#e879f9',
+                            500: '#c084fc',
+                            600: '#a855f7',
+                            700: '#7e22ce',
+                            800: '#581c87',
+                            900: '#3b0764',
+                        },
+                        pastel: {
+                            pink: '#FFD1DC',
+                            lavender: '#E6E6FA',
+                            peach: '#FFDAB9',
+                            mint: '#E0F8E7',
+                            cream: '#FFFDD0',
+                            purple: '#D8B4FE',
+                            blue: '#BAE6FD'
+                        }
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                        'card': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01)',
+                        'glow': '0 0 20px rgba(168, 85, 247, 0.35)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            background: linear-gradient(-45deg, #fce7f3, #f3e8ff, #e0f2fe, #fbcfe8);
+            background-size: 300% 300%;
+            animation: gradientShift 14s ease infinite;
+            min-height: 100vh;
+        }
+
+        /* Animated Ambient Orbs */
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(35px, -25px) scale(1.15); }
+        }
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-30px, 30px) scale(1.2); }
+        }
+        @keyframes orbFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, 30px) scale(0.9); }
+        }
+
+        .animate-orb-1 { animation: orbFloat1 10s ease-in-out infinite; }
+        .animate-orb-2 { animation: orbFloat2 12s ease-in-out infinite; }
+        .animate-orb-3 { animation: orbFloat3 8s ease-in-out infinite; }
+
+        /* Glassmorphism Styles */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .dark .glass-panel {
+            background: rgba(23, 23, 33, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .dark .glass-card {
+            background: rgba(30, 30, 45, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px -6px rgba(168, 85, 247, 0.18);
+        }
+
+        /* Shimmer Effect for Interactive Buttons */
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                60deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 70%
+            );
+            transform: rotate(30deg) translateX(-100%);
+            transition: transform 0.8s ease;
+        }
+        .shimmer-btn:hover::after {
+            transform: rotate(30deg) translateX(100%);
+        }
+
+        /* Pop In Animation for Choices & Cards */
+        @keyframes popIn {
+            0% { opacity: 0; transform: translateY(16px) scale(0.95); }
+            60% { transform: translateY(-3px) scale(1.01); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .animate-pop-in {
+            animation: popIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Avatar Pulsing Aura */
+        @keyframes auraPulse {
+            0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.45); }
+            70% { box-shadow: 0 0 0 12px rgba(168, 85, 247, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); }
+        }
+        .avatar-aura {
+            animation: auraPulse 2.5s infinite;
+        }
+
+        /* Animated Progress Bar Stripes */
+        @keyframes barStripe {
+            from { background-position: 1rem 0; }
+            to { background-position: 0 0; }
+        }
+        .animated-bar-stripe {
+            background-image: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.25) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.25) 50%,
+                rgba(255, 255, 255, 0.25) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 1rem 1rem;
+            animation: barStripe 1s linear infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(168, 85, 247, 0.3);
+            border-radius: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.35s ease-out forwards;
+        }
+
+        .animate-glow {
+            animation: pulseGlow 2s infinite;
+        }
+
+        .badge-pop {
+            animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Toast Notifications */
+        #toast-container {
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .toast-item {
+            animation: fadeIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+
+        /* Prevent text select on touch controls */
+        .no-select {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body class="text-slate-800 dark:text-slate-100 dark:bg-slate-950 min-h-screen flex items-center justify-center p-0 sm:p-4 overflow-x-hidden transition-colors duration-300">
+
+    <!-- App Mobile Frame Container -->
+    <div id="app-container" class="w-full max-w-md h-screen sm:h-[880px] sm:rounded-[40px] shadow-2xl glass-panel relative flex flex-col overflow-hidden border-0 sm:border border-white/40 dark:border-slate-800">
+
+        <!-- FX Animated Canvas Layer -->
+        <canvas id="fx-canvas" class="absolute inset-0 pointer-events-none z-50 w-full h-full"></canvas>
+
+        <!-- Ambient Floating Background Blur Orbs -->
+        <div class="absolute -top-16 -left-16 w-52 h-52 bg-pink-300/35 rounded-full blur-2xl pointer-events-none animate-orb-1"></div>
+        <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-purple-400/25 rounded-full blur-2xl pointer-events-none animate-orb-2"></div>
+        <div class="absolute top-1/2 left-1/3 w-44 h-44 bg-sky-300/25 rounded-full blur-3xl pointer-events-none animate-orb-3"></div>
+
+        <!-- Top Toast Notification Area -->
+        <div id="toast-container" class="absolute top-4 left-0 right-0 px-4 flex flex-col gap-2 items-center"></div>
+
+        <!-- ================= PANTALLA DE INICIO ================= -->
+        <section id="screen-start" class="screen flex flex-col justify-between h-full p-6 text-center animate-fade-in relative z-10">
+            <div class="mt-12 flex flex-col items-center">
+                <div class="w-24 h-24 rounded-3xl bg-gradient-to-tr from-pink-400 via-purple-500 to-indigo-500 p-1 shadow-glow mb-6 animate-glow">
+                    <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[22px] flex items-center justify-center">
+                        <i class="fa-solid fa-sparkles text-4xl text-purple-600 dark:text-purple-400 animate-pulse"></i>
+                    </div>
+                </div>
+                <h1 class="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-2">
+                    TU VIDA,<br/>TUS DECISIONES
+                </h1>
+                <p class="text-xs font-medium text-slate-500 dark:text-slate-400 max-w-xs uppercase tracking-widest">
+                    Cada elección escribe tu historia
+                </p>
+            </div>
+
+            <div class="space-y-3 mb-10 w-full px-4">
+                <button onclick="Game.startNewGame()" class="shimmer-btn w-full py-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-bold rounded-2xl shadow-lg hover:shadow-purple-500/30 hover:scale-[1.02] active:scale-95 transition-all duration-200 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play"></i> NUEVO JUEGO
+                </button>
+                <button id="btn-continue" onclick="Game.continueGame()" class="shimmer-btn w-full py-4 bg-white/80 dark:bg-slate-800/80 text-purple-700 dark:text-purple-300 font-bold rounded-2xl border border-purple-200 dark:border-slate-700 shadow-sm hover:bg-white hover:scale-[1.02] active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 hidden">
+                    <i class="fa-solid fa-bookmark"></i> CONTINUAR
+                </button>
+                <button onclick="UI.showScreen('screen-settings')" class="w-full py-3 bg-slate-100/80 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300 font-semibold rounded-2xl hover:bg-slate-200/80 hover:scale-[1.01] active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-gear"></i> AJUSTES
+                </button>
+            </div>
+
+            <div class="text-[11px] text-slate-400 mb-2">
+                Simulador narrativo interactivo • v2.6
+            </div>
+        </section>
+
+        <!-- ================= CREACIÓN DE PERSONAJE ================= -->
+        <section id="screen-char-creator" class="screen hidden flex-col h-full p-6 overflow-y-auto animate-fade-in">
+            <div class="flex items-center gap-3 mb-6">
+                <button onclick="UI.showScreen('screen-start')" class="w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-200 shadow-sm">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <h2 class="text-xl font-bold text-slate-800 dark:text-white">Crear Personaje</h2>
+            </div>
+
+            <!-- Avatar Dynamic Preview -->
+            <div class="flex flex-col items-center mb-6">
+                <div id="avatar-preview" class="w-28 h-28 rounded-full border-4 border-white dark:border-slate-800 shadow-xl flex items-center justify-center text-5xl relative transition-all duration-300 mb-3" style="background-color: #fce7f3;">
+                    <span id="avatar-emoji">👧</span>
+                    <span id="avatar-accessory" class="absolute top-0 right-0 text-2xl">✨</span>
+                </div>
+                <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/40 px-3 py-1 rounded-full">
+                    Previsualización del Protagonista
+                </span>
+            </div>
+
+            <form id="char-form" onsubmit="Game.finalizeCharacterCreation(event)" class="space-y-4 text-sm pb-8">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Nombre</label>
+                    <input type="text" id="char-name" required maxlength="16" placeholder="Ej: Valentina, Alex..." class="w-full px-4 py-3 rounded-xl border border-purple-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Edad</label>
+                        <select id="char-age" class="w-full px-3 py-3 rounded-xl border border-purple-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800 text-slate-800 dark:text-white">
+                            <option value="15">15 años</option>
+                            <option value="16" selected>16 años</option>
+                            <option value="17">17 años</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Personalidad</label>
+                        <select id="char-personality" class="w-full px-3 py-3 rounded-xl border border-purple-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800 text-slate-800 dark:text-white">
+                            <option value="Curiosa">Curiosa / Empática</option>
+                            <option value="Ambiciosa">Ambiciosa / Líder</option>
+                            <option value="Creativa">Creativa / Soñadora</option>
+                            <option value="Reservada">Reservada / Analítica</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Avatar / Estilo</label>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button type="button" onclick="UI.updateAvatarPreview({emoji: '👧'})" class="p-3 bg-white/80 dark:bg-slate-800 rounded-xl text-2xl hover:bg-purple-100">👧</button>
+                        <button type="button" onclick="UI.updateAvatarPreview({emoji: '🧑'})" class="p-3 bg-white/80 dark:bg-slate-800 rounded-xl text-2xl hover:bg-purple-100">🧑</button>
+                        <button type="button" onclick="UI.updateAvatarPreview({emoji: '👩'})" class="p-3 bg-white/80 dark:bg-slate-800 rounded-xl text-2xl hover:bg-purple-100">👩</button>
+                        <button type="button" onclick="UI.updateAvatarPreview({emoji: '👦'})" class="p-3 bg-white/80 dark:bg-slate-800 rounded-xl text-2xl hover:bg-purple-100">👦</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Color Favorito</label>
+                    <div class="flex gap-3">
+                        <button type="button" onclick="UI.updateAvatarPreview({bg: '#fce7f3'})" class="w-8 h-8 rounded-full bg-pink-200 border-2 border-white shadow-sm"></button>
+                        <button type="button" onclick="UI.updateAvatarPreview({bg: '#e9d5ff'})" class="w-8 h-8 rounded-full bg-purple-200 border-2 border-white shadow-sm"></button>
+                        <button type="button" onclick="UI.updateAvatarPreview({bg: '#bae6fd'})" class="w-8 h-8 rounded-full bg-sky-200 border-2 border-white shadow-sm"></button>
+                        <button type="button" onclick="UI.updateAvatarPreview({bg: '#dcfce7'})" class="w-8 h-8 rounded-full bg-green-200 border-2 border-white shadow-sm"></button>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full mt-6 py-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-bold rounded-2xl shadow-lg hover:brightness-110 transition-all">
+                    COMENZAR MI HISTORIA <i class="fa-solid fa-sparkles ml-1"></i>
+                </button>
+            </form>
+        </section>
+
+        <!-- ================= PANTALLA PRINCIPAL DEL JUEGO ================= -->
+        <section id="screen-game" class="screen hidden flex-col h-full relative overflow-hidden animate-fade-in">
+
+            <!-- Top Status Bar (HUD) -->
+            <div class="px-4 py-3 bg-white/80 dark:bg-slate-900/90 border-b border-purple-100 dark:border-slate-800 flex items-center justify-between text-xs z-10">
+                <div class="flex items-center gap-2">
+                    <div id="hud-avatar" class="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center text-sm font-bold shadow-sm">👧</div>
+                    <div>
+                        <div id="hud-name" class="font-bold text-slate-800 dark:text-slate-100 text-xs">Protagonista</div>
+                        <div class="flex items-center gap-1 text-[10px] text-purple-600 dark:text-purple-400 font-semibold">
+                            <span>Nvl <span id="hud-level">1</span></span>
+                            <span>•</span>
+                            <span id="hud-xp-text">0/100 XP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time & Day Indicator -->
+                <div class="flex flex-col items-center bg-purple-50 dark:bg-slate-800/60 px-3 py-1 rounded-xl border border-purple-100 dark:border-slate-700">
+                    <span id="hud-day" class="font-extrabold text-purple-700 dark:text-purple-300 text-[11px] tracking-wide">LUNES</span>
+                    <span id="hud-time" class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">🌅 Mañana</span>
+                </div>
+
+                <!-- Quick Stats Badges -->
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-1 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 px-2 py-1 rounded-lg border border-amber-200 dark:border-amber-900/50 font-bold text-[11px]">
+                        💵 $<span id="hud-money">50.000</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter Indicator Banner -->
+            <div class="bg-gradient-to-r from-purple-600 to-pink-500 text-white text-[11px] font-bold px-4 py-1 text-center shadow-sm flex items-center justify-between">
+                <span id="hud-chapter-title">Capítulo 1: Un nuevo comienzo</span>
+                <span id="hud-location-tag" class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full"><i class="fa-solid fa-location-dot"></i> Colegio</span>
+            </div>
+
+            <!-- Dynamic Tab Viewports Container -->
+            <div class="flex-1 overflow-y-auto p-4 pb-20 relative" id="game-tab-viewport">
+
+                <!-- TAB 1: NARRATIVA Y DIÁLOGOS -->
+                <div id="tab-story" class="tab-content space-y-4">
+                    <!-- Event Banner Image / Location Title -->
+                    <div id="story-header-card" class="glass-card p-4 rounded-2xl border border-white/60 dark:border-slate-800 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div id="story-location-icon" class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-300 text-xl">
+                                🏫
+                            </div>
+                            <div>
+                                <h3 id="story-location-name" class="font-bold text-slate-800 dark:text-slate-100 text-sm">Entrada del Colegio</h3>
+                                <p id="story-subtext" class="text-[11px] text-slate-500 dark:text-slate-400">8:00 AM • Lunes</p>
+                            </div>
+                        </div>
+                        <button onclick="Game.triggerRandomEvent()" class="text-[11px] font-bold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1.5 rounded-xl border border-purple-200 dark:border-purple-800 hover:bg-purple-100 transition-all flex items-center gap-1">
+                            <i class="fa-solid fa-dice"></i> Evento
+                        </button>
+                    </div>
+
+                    <!-- Main Character Dialogue Card -->
+                    <div class="glass-card rounded-2xl p-4 shadow-card border border-white/80 dark:border-slate-800 relative">
+                        <div class="flex items-start gap-3 mb-3">
+                            <div id="dialogue-avatar" class="w-12 h-12 rounded-2xl bg-pink-100 dark:bg-slate-800 flex items-center justify-center text-2xl shadow-sm border border-pink-200 dark:border-slate-700 flex-shrink-0 avatar-aura transition-all duration-300">
+                                👧
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between">
+                                    <h4 id="dialogue-speaker" class="font-bold text-purple-700 dark:text-purple-300 text-sm">Sofía</h4>
+                                    <span id="dialogue-rel-badge" class="text-[10px] bg-pink-100 dark:bg-pink-950 text-pink-600 dark:text-pink-300 px-2 py-0.5 rounded-full font-bold">
+                                        ❤️ 80/100
+                                    </span>
+                                </div>
+                                <p id="dialogue-text" class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 mt-1 leading-relaxed min-h-[50px] transition-all">
+                                    Cargando diálogo...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Decision Choices Section -->
+                    <div class="space-y-2.5 pt-1">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-1">¿Qué decides hacer?</div>
+                        <div id="choices-container" class="space-y-2.5">
+                            <!-- Options injected dynamically by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: MAPA -->
+                <div id="tab-map" class="tab-content hidden space-y-3">
+                    <h3 class="font-bold text-slate-800 dark:text-white text-base">Lugares del Pueblo</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Explora diferentes ubicaciones para desencadenar eventos y hablar con personas.</p>
+
+                    <div id="map-grid" class="grid grid-cols-2 gap-3 pt-2">
+                        <!-- Locations injected dynamically -->
+                    </div>
+                </div>
+
+                <!-- TAB 3: PERSONAJES -->
+                <div id="tab-characters" class="tab-content hidden space-y-3">
+                    <h3 class="font-bold text-slate-800 dark:text-white text-base">Relaciones y Personajes</h3>
+                    <div id="characters-list" class="space-y-3">
+                        <!-- Characters injected dynamically -->
+                    </div>
+                </div>
+
+                <!-- TAB 4: INVENTARIO -->
+                <div id="tab-inventory" class="tab-content hidden space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-slate-800 dark:text-white text-base">Mochila & Objetos</h3>
+                        <span id="inventory-count" class="text-xs font-bold bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300 px-2.5 py-1 rounded-full">0/10</span>
+                    </div>
+                    <div id="inventory-grid" class="grid grid-cols-2 gap-3">
+                        <!-- Items injected dynamically -->
+                    </div>
+                </div>
+
+                <!-- TAB 5: ESTADÍSTICAS -->
+                <div id="tab-stats" class="tab-content hidden space-y-4">
+                    <h3 class="font-bold text-slate-800 dark:text-white text-base">Estadísticas del Personaje</h3>
+                    <div class="glass-card p-4 rounded-2xl space-y-3.5">
+                        <div id="stats-bars-container" class="space-y-3">
+                            <!-- Stats injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 6: LOGROS -->
+                <div id="tab-achievements" class="tab-content hidden space-y-3">
+                    <h3 class="font-bold text-slate-800 dark:text-white text-base">Logros Desbloqueados</h3>
+                    <div id="achievements-list" class="space-y-2.5">
+                        <!-- Achievements injected dynamically -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Navigation Bar -->
+            <div class="absolute bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/95 border-t border-purple-100 dark:border-slate-800 px-2 py-2 flex items-center justify-around z-20">
+                <button onclick="UI.switchTab('tab-story')" id="nav-tab-story" class="nav-btn active flex flex-col items-center text-purple-600 dark:text-purple-400">
+                    <i class="fa-solid fa-comments text-lg"></i>
+                    <span class="text-[10px] font-bold mt-0.5">Historia</span>
+                </button>
+                <button onclick="UI.switchTab('tab-map')" id="nav-tab-map" class="nav-btn flex flex-col items-center text-slate-400 hover:text-purple-600">
+                    <i class="fa-solid fa-map-location-dot text-lg"></i>
+                    <span class="text-[10px] font-bold mt-0.5">Mapa</span>
+                </button>
+                <button onclick="UI.switchTab('tab-characters')" id="nav-tab-characters" class="nav-btn flex flex-col items-center text-slate-400 hover:text-purple-600">
+                    <i class="fa-solid fa-user-group text-lg"></i>
+                    <span class="text-[10px] font-bold mt-0.5">Amigos</span>
+                </button>
+                <button onclick="UI.switchTab('tab-inventory')" id="nav-tab-inventory" class="nav-btn flex flex-col items-center text-slate-400 hover:text-purple-600">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span class="text-[10px] font-bold mt-0.5">Mochila</span>
+                </button>
+                <button onclick="UI.switchTab('tab-stats')" id="nav-tab-stats" class="nav-btn flex flex-col items-center text-slate-400 hover:text-purple-600">
+                    <i class="fa-solid fa-chart-simple text-lg"></i>
+                    <span class="text-[10px] font-bold mt-0.5">Stats</span>
+                </button>
+                <button onclick="UI.switchTab('tab-achievements')" id="nav-tab-achievements" class="nav-btn flex flex-col items-center text-slate-400 hover:text-purple-600">
+                    <i class="fa-solid fa-trophy text-lg"></i>
+                    <span class="text-[10px] font-bold mt-0.5">Logros</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= PANTALLA DE FINAL DEL JUEGO ================= -->
+        <section id="screen-ending" class="screen hidden flex-col h-full p-6 text-center overflow-y-auto animate-fade-in">
+            <div class="my-auto py-6 space-y-4">
+                <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-400 to-pink-500 mx-auto flex items-center justify-center text-white text-3xl shadow-glow">
+                    🏆
+                </div>
+                <span class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-widest bg-purple-100 dark:bg-purple-950 px-3 py-1 rounded-full">FINAL ALCANZADO</span>
+                <h2 id="ending-title" class="text-2xl font-extrabold text-slate-800 dark:text-white">Título del Final</h2>
+                <p id="ending-description" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed px-2">
+                    Descripción del final conseguido...
+                </p>
+
+                <!-- Ending Stats Summary Card -->
+                <div class="glass-card p-4 rounded-2xl text-left space-y-2 border border-purple-100 dark:border-slate-800 my-4 text-xs">
+                    <div class="font-bold text-purple-700 dark:text-purple-300 mb-2">Resumen de tu etapa:</div>
+                    <div class="grid grid-cols-2 gap-2 text-slate-600 dark:text-slate-300">
+                        <div>❤️ Relaciones: <span id="end-stat-rel" class="font-bold">0</span></div>
+                        <div>🧠 Inteligencia: <span id="end-stat-int" class="font-bold">0</span></div>
+                        <div>✨ Popularidad: <span id="end-stat-pop" class="font-bold">0</span></div>
+                        <div>💪 Confianza: <span id="end-stat-conf" class="font-bold">0</span></div>
+                        <div>📚 Rendimiento: <span id="end-stat-rend" class="font-bold">0</span></div>
+                        <div>💰 Dinero: <span id="end-stat-mon" class="font-bold">$0</span></div>
+                    </div>
+                </div>
+
+                <div class="space-y-2 pt-2">
+                    <button onclick="Game.resetGameProgress()" class="w-full py-3.5 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-bold rounded-xl shadow-lg hover:brightness-110">
+                        <i class="fa-solid fa-rotate-right"></i> JUGAR DE NUEVO
+                    </button>
+                    <button onclick="UI.showScreen('screen-start')" class="w-full py-3 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-xl">
+                        🏠 MENÚ PRINCIPAL
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= MENÚ DE AJUSTES ================= -->
+        <section id="screen-settings" class="screen hidden flex-col h-full p-6 animate-fade-in">
+            <div class="flex items-center gap-3 mb-6">
+                <button onclick="UI.showScreen(GameState.hasStarted ? 'screen-game' : 'screen-start')" class="w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-200 shadow-sm">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <h2 class="text-xl font-bold text-slate-800 dark:text-white">Ajustes</h2>
+            </div>
+
+            <div class="space-y-4 text-sm">
+                <div class="glass-card p-4 rounded-2xl flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-volume-high text-purple-600 text-lg"></i>
+                        <div>
+                            <div class="font-bold text-slate-800 dark:text-white">Efectos de Sonido</div>
+                            <div class="text-xs text-slate-500">Sonidos táctiles e interfaz</div>
+                        </div>
+                    </div>
+                    <input type="checkbox" id="setting-sound" onchange="Settings.toggleSound(this.checked)" checked class="w-5 h-5 accent-purple-600">
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-moon text-purple-600 text-lg"></i>
+                        <div>
+                            <div class="font-bold text-slate-800 dark:text-white">Modo Oscuro</div>
+                            <div class="text-xs text-slate-500">Cambiar tema visual</div>
+                        </div>
+                    </div>
+                    <input type="checkbox" id="setting-dark" onchange="Settings.toggleDarkMode(this.checked)" class="w-5 h-5 accent-purple-600">
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl space-y-3">
+                    <div class="font-bold text-red-600 dark:text-red-400 flex items-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Zona de Peligro
+                    </div>
+                    <p class="text-xs text-slate-500">Si reinicias el progreso, perderás todas tus decisiones, inventario y finales desbloqueados.</p>
+                    <button onclick="Game.confirmReset()" class="w-full py-2.5 bg-red-500/10 text-red-600 dark:text-red-400 font-bold border border-red-200 dark:border-red-900/50 rounded-xl hover:bg-red-500/20 transition-all">
+                        Reiniciar Todo el Progreso
+                    </button>
+                </div>
+
+                <div class="text-center pt-6 text-xs text-slate-400">
+                    "TU VIDA, TUS DECISIONES"<br/>
+                    Desarrollado como experiencia narrativa web móvil.
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC -->
+    <script>
+        /* ==========================================================================
+           PARTICLE & CONFETTI FX ENGINE
+           ========================================================================== */
+        const FX = {
+            canvas: null,
+            ctx: null,
+            particles: [],
+
+            init() {
+                this.canvas = document.getElementById('fx-canvas');
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                requestAnimationFrame(() => this.loop());
+            },
+
+            resize() {
+                if (!this.canvas) return;
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+            },
+
+            spawnConfetti(count = 35) {
+                if (!this.canvas) return;
+                const colors = ['#a855f7', '#ec4899', '#3b82f6', '#10b981', '#f59e0b'];
+                for (let i = 0; i < count; i++) {
+                    this.particles.push({
+                        x: this.canvas.width / 2 + (Math.random() * 60 - 30),
+                        y: this.canvas.height / 3,
+                        vx: (Math.random() - 0.5) * 8,
+                        vy: Math.random() * -8 - 3,
+                        size: Math.random() * 6 + 4,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        rotation: Math.random() * Math.PI * 2,
+                        vRot: (Math.random() - 0.5) * 0.2,
+                        alpha: 1,
+                        gravity: 0.2,
+                        life: 1
+                    });
+                }
+            },
+
+            spawnBurst(x, y, count = 18) {
+                if (!this.canvas) return;
+                const colors = ['#f472b6', '#c084fc', '#60a5fa', '#fef08a'];
+                for (let i = 0; i < count; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 4 + 2;
+                    this.particles.push({
+                        x: x || this.canvas.width / 2,
+                        y: y || this.canvas.height / 2,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        size: Math.random() * 4 + 2,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        rotation: 0,
+                        vRot: 0,
+                        alpha: 1,
+                        gravity: 0.08,
+                        life: 1
+                    });
+                }
+            },
+
+            loop() {
+                if (!this.ctx) return;
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                for (let i = this.particles.length - 1; i >= 0; i--) {
+                    const p = this.particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += p.gravity;
+                    p.rotation += p.vRot;
+                    p.life -= 0.018;
+
+                    if (p.life <= 0) {
+                        this.particles.splice(i, 1);
+                        continue;
+                    }
+
+                    this.ctx.save();
+                    this.ctx.globalAlpha = Math.max(0, p.life);
+                    this.ctx.translate(p.x, p.y);
+                    this.ctx.rotate(p.rotation);
+                    this.ctx.fillStyle = p.color;
+                    this.ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    this.ctx.restore();
+                }
+
+                requestAnimationFrame(() => this.loop());
+            }
+        };
+
+        /* ==========================================================================
+           AUDIO MANAGER (Web Audio API Synthesizer - Enhanced)
+           ========================================================================== */
+        const AudioManager = {
+            ctx: null,
+            enabled: true,
+
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) this.ctx = new AudioContext();
+                }
+            },
+
+            playClick() {
+                if (!this.enabled || !this.ctx) return;
+                try {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(650, this.ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(300, this.ctx.currentTime + 0.06);
+                    gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.06);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + 0.06);
+                } catch (e) {}
+            },
+
+            playNotification() {
+                if (!this.enabled || !this.ctx) return;
+                try {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, this.ctx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, this.ctx.currentTime + 0.08);
+                    gain.gain.setValueAtTime(0.18, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.25);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + 0.25);
+                } catch (e) {}
+            },
+
+            playAchievement() {
+                if (!this.enabled || !this.ctx) return;
+                try {
+                    const notes = [523.25, 659.25, 783.99, 1046.50];
+                    notes.forEach((freq, idx) => {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.value = freq;
+                        gain.gain.setValueAtTime(0.15, this.ctx.currentTime + idx * 0.08);
+                        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.08 + 0.22);
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        osc.start(this.ctx.currentTime + idx * 0.08);
+                        osc.stop(this.ctx.currentTime + idx * 0.08 + 0.22);
+                    });
+                } catch (e) {}
+            }
+        };
+
+        /* ==========================================================================
+           SETTINGS MANAGER
+           ========================================================================== */
+        const Settings = {
+            darkMode: false,
+            sound: true,
+
+            toggleSound(val) {
+                this.sound = val;
+                AudioManager.enabled = val;
+                if (val) AudioManager.init();
+                this.save();
+            },
+
+            toggleDarkMode(val) {
+                this.darkMode = val;
+                if (val) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+                this.save();
+            },
+
+            save() {
+                localStorage.setItem('game_settings', JSON.stringify({
+                    darkMode: this.darkMode,
+                    sound: this.sound
+                }));
+            },
+
+            load() {
+                const saved = localStorage.getItem('game_settings');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    this.darkMode = parsed.darkMode || false;
+                    this.sound = parsed.sound !== undefined ? parsed.sound : true;
+                    
+                    document.getElementById('setting-sound').checked = this.sound;
+                    document.getElementById('setting-dark').checked = this.darkMode;
+                    if (this.darkMode) document.documentElement.classList.add('dark');
+                    AudioManager.enabled = this.sound;
+                }
+            }
+        };
+
+        /* ==========================================================================
+           GAME DATA & CONFIGURATION
+           ========================================================================== */
+        const STAT_NAMES = {
+            relaciones: '❤️ Relaciones',
+            inteligencia: '🧠 Inteligencia',
+            popularidad: '✨ Popularidad',
+            confianza: '💪 Confianza',
+            rendimiento: '📚 Rendimiento',
+            dinero: '💰 Dinero',
+            energia: '⚡ Energía',
+            animo: '😊 Estado de ánimo'
+        };
+
+        const DAYS_LIST = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'];
+        const TIMES_LIST = ['🌅 Mañana', '☀️ Mediodía', '🌇 Tarde', '🌙 Noche'];
+
+        const CHARACTERS_DATA = {
+            sofia: {
+                id: 'sofia',
+                name: 'Sofía',
+                emoji: '👧',
+                age: 16,
+                personality: 'Extrovertida, divertida y muy curiosa.',
+                desc: 'Tu mejor amiga desde la infancia. Siempre metida en líos pero incondicional.',
+                trust: 80,
+                likes: 'Secretos, música indie, ir a la cafetería',
+                secrets: 'Tiene pánico a decepcionar a sus padres.'
+            },
+            daniel: {
+                id: 'daniel',
+                name: 'Daniel',
+                emoji: '👦',
+                age: 17,
+                personality: 'Atlético, reservado y leal.',
+                desc: 'Capitán del equipo deportivo del colegio. Callado pero protege a sus verdaderos amigos.',
+                trust: 50,
+                likes: 'Deportes, comida rápida, honestidad',
+                secrets: 'Siente mucha presión social por agradar a todos.'
+            },
+            valentina: {
+                id: 'valentina',
+                name: 'Valentina',
+                emoji: '👩',
+                age: 16,
+                personality: 'Líder estudiantil, perfeccionista.',
+                desc: 'Presidenta del consejo escolar. Directa y organizada.',
+                trust: 40,
+                likes: 'Debates, café helado, orden',
+                secrets: 'A veces siente que no tiene amigos reales, solo conocidos.'
+            },
+            mateo: {
+                id: 'mateo',
+                name: 'Mateo',
+                emoji: '🧑',
+                age: 17,
+                personality: 'Rebelde, apasionado de la música.',
+                desc: 'Suele andar con audífonos. No tolera las injusticias.',
+                trust: 35,
+                likes: 'Guitarra, conciertos, personas auténticas',
+                secrets: 'Escribe canciones sobre sus miedos pero le da pena mostrarlas.'
+            },
+            camila: {
+                id: 'camila',
+                name: 'Camila',
+                emoji: '🎨',
+                age: 16,
+                personality: 'Artista tímida y observadora.',
+                desc: 'Pasa sus descansos dibujando en el patio. Capta detalles que otros ignoran.',
+                trust: 45,
+                likes: 'Pintura, tranquilidad, té helado',
+                secrets: 'Su sueño es exponer sus cuadros en una galería real.'
+            },
+            lucas: {
+                id: 'lucas',
+                name: 'Lucas',
+                emoji: '🤓',
+                age: 16,
+                personality: 'Competitivo y cerebrito.',
+                desc: 'El número 1 en calificaciones. Siempre enfocado en superar sus récords.',
+                trust: 30,
+                likes: 'Ajedrez, tecnología, exámenes perfectos',
+                secrets: 'Teme perder su primer puesto escolar.'
+            },
+            profesora: {
+                id: 'profesora',
+                name: 'Profesora Elena',
+                emoji: '👩‍🏫',
+                age: 38,
+                personality: 'Mentora exigente pero comprensiva.',
+                desc: 'Docente principal de literatura y tutora de grupo.',
+                trust: 60,
+                likes: 'Lectura, ensayos estructurados, superación',
+                secrets: 'Intenta ayudar a los alumnos vulnerables en secreto.'
+            },
+            mama: {
+                id: 'mama',
+                name: 'Mamá',
+                emoji: '🏡',
+                age: 44,
+                personality: 'Cariñosa, protectora y atenta.',
+                desc: 'Tu principal apoyo familiar. Siempre preocupada por tu bienestar.',
+                trust: 85,
+                likes: 'Cenas en familia, pláticas sinceras',
+                secrets: 'Trabaja horas extra para comprarte tus gustos.'
+            }
+        };
+
+        const ITEMS_DATA = [
+            { id: 'phone', name: 'Teléfono Móvil', emoji: '📱', desc: '+5 Popularidad. Mantente conectada con todos.', value: 0, usable: false },
+            { id: 'backpack', name: 'Mochila Urbana', emoji: '🎒', desc: '+5 Rendimiento. Guarda todos tus apuntes.', value: 0, usable: false },
+            { id: 'book', name: 'Libro de Filosofía', emoji: '📖', desc: 'Úsalo para ganar +8 de Inteligencia.', value: 15000, usable: true, effect: { inteligencia: 8 } },
+            { id: 'headphones', name: 'Audífonos', emoji: '🎧', desc: 'Úsalos para recuperar +15 de Energía.', value: 25000, usable: true, effect: { energia: 15 } },
+            { id: 'gift', name: 'Regalo Especial', emoji: '🎁', desc: 'Regálalo a un amigo para ganar +15 de Relación.', value: 20000, usable: true, effect: { relaciones: 15 } },
+            { id: 'coffee', name: 'Café Cargado', emoji: '☕', desc: 'Recupera +20 de Energía y +5 de Ánimo.', value: 5000, usable: true, effect: { energia: 20, animo: 5 } },
+            { id: 'snack', name: 'Botana / Snack', emoji: '🥪', desc: 'Mejora tu ánimo (+10).', value: 4000, usable: true, effect: { animo: 10 } },
+            { id: 'notebook', name: 'Cuaderno Dibujos', emoji: '🎨', desc: 'Sube tu confianza e inteligencia.', value: 12000, usable: true, effect: { confianza: 5, inteligencia: 5 } },
+            { id: 'key', name: 'Llave Misteriosa', emoji: '🔑', desc: 'Desbloquea áreas o secretos del juego.', value: 0, usable: false },
+            { id: 'letter', name: 'Carta Confidencial', emoji: '💌', desc: 'Contiene información valiosa sobre un chisme.', value: 0, usable: false }
+        ];
+
+        const LOCATIONS_DATA = [
+            { id: 'colegio', name: 'Colegio', emoji: '🏫', unlocked: true, desc: 'Clases, rumores y vida social.' },
+            { id: 'casa', name: 'Casa', emoji: '🏠', unlocked: true, desc: 'Lugar seguro para descansar y estudiar.' },
+            { id: 'parque', name: 'Parque Central', emoji: '🌳', unlocked: true, desc: 'Paseos, encuentros casuales y tranquilidad.' },
+            { id: 'cafeteria', name: 'Cafetería Delicias', emoji: '☕', unlocked: true, desc: 'Buen café y charlas interesantes.' },
+            { id: 'iglesia', name: 'Centro Comunitario', emoji: '⛪', unlocked: false, reqLevel: 2, desc: 'Voluntariado y eventos especiales.' },
+            { id: 'comercial', name: 'Centro Comercial', emoji: '🛍️', unlocked: false, reqLevel: 2, desc: 'Compras y lugares de ocio.' },
+            { id: 'biblioteca', name: 'Biblioteca Pública', emoji: '📚', unlocked: false, reqLevel: 3, desc: 'Estudio intensivo y ambiente sereno.' },
+            { id: 'evento', name: 'Foro Cultural', emoji: '🎭', unlocked: false, reqLevel: 4, desc: 'Eventos masivos y grandes decisiones.' }
+        ];
+
+        const ACHIEVEMENTS_DATA = [
+            { id: 'ach_first', title: 'Primera Decisión', desc: 'Diste tu primer paso en tu nueva etapa.', icon: '🌱' },
+            { id: 'ach_friend', title: 'Mejor Amiga', desc: 'Alcanzaste 90 de confianza con un personaje.', icon: '❤️' },
+            { id: 'ach_smart', title: 'Cerebrito', desc: 'Alcanzaste 85 de inteligencia.', icon: '🧠' },
+            { id: 'ach_popular', title: 'Centro de Atención', desc: 'Superaste los 80 puntos de popularidad.', icon: '✨' },
+            { id: 'ach_rich', title: 'Independiente', desc: 'Ahorraste más de $100.000.', icon: '💵' },
+            { id: 'ach_nodrama', title: 'Paz Interior', desc: 'Llegaste a Nivel 3 manteniendo alta energía y ánimo.', icon: '🕊️' },
+            { id: 'ach_secret', title: 'Guardián de Secretos', desc: 'Demostraste lealtad incondicional.', icon: '🔐' },
+            { id: 'ach_detective', title: 'Gran Detective', desc: 'Descubriste la verdad sobre los rumores.', icon: '🔎' },
+            { id: 'ach_level5', title: 'Protagonista Total', desc: 'Alcanzaste el Nivel 5 de experiencia.', icon: '⭐' },
+            { id: 'ach_ending', title: 'Tu Propio Destino', desc: 'Completaste la historia y desbloqueaste un final.', icon: '🏆' }
+        ];
+
+        /* ==========================================================================
+           NARRATIVE SCENES TREE (MINIMUM 30 SCENES WITH BRANCHES)
+           ========================================================================== */
+        const SCENES_TREE = {
+            // CAPÍTULO 1
+            'scene_1': {
+                chapter: 1,
+                chapterTitle: 'Capítulo 1: Un nuevo comienzo',
+                location: 'Colegio',
+                speaker: 'sofia',
+                text: '¡Oye! Menos mal que te veo. Necesito contarte algo superserio de lo que pasó el fin de semana... pero prométeme que no se lo vas a decir absolutamente a nadie, ¿vale?',
+                choices: [
+                    {
+                        text: '🤍 "Te lo prometo con el corazón. Cuenta conmigo."',
+                        subtext: '+10 Relación con Sofía • Guardar secreto',
+                        effects: { stats: { relaciones: 5, animo: 5 }, charTrust: { sofia: 10 }, flags: { promised_sofia: true } },
+                        nextScene: 'scene_2_promise'
+                    },
+                    {
+                        text: '👀 "Depende... Si es algo grave no puedo guardar secretos."',
+                        subtext: '+5 Inteligencia • Postura cautelosa',
+                        effects: { stats: { inteligencia: 5, confianza: 5 }, charTrust: { sofia: -5 }, flags: { promised_sofia: false } },
+                        nextScene: 'scene_2_cautious'
+                    },
+                    {
+                        text: '😂 "¡Ja, ja! Dale, suéltalo ya o me va a dar algo de la curiosidad."',
+                        subtext: '+5 Popularidad • Conversación relajada',
+                        effects: { stats: { popularidad: 5, energia: -5 }, charTrust: { sofia: 5 } },
+                        nextScene: 'scene_2_curious'
+                    },
+                    {
+                        text: '🚪 "Sofía, tengo prisa por llegar al salón de clases."',
+                        subtext: '+8 Rendimiento Académico • Distanciamiento',
+                        effects: { stats: { rendimiento: 8, relaciones: -5 }, charTrust: { sofia: -10 } },
+                        nextScene: 'scene_2_avoid'
+                    }
+                ]
+            },
+
+            'scene_2_promise': {
+                chapter: 1,
+                location: 'Colegio',
+                speaker: 'sofia',
+                text: 'Gracias... Resulta que vi a Daniel discutiendo feo cerca de la biblioteca con alguien de otro colegio, y se le cayó una nota con datos de los exámenes finales. ¡No sé si está metido en problemas!',
+                choices: [
+                    {
+                        text: '🤝 "Acompañémoslo y preguntémosle de frente sin juzgar."',
+                        subtext: '+10 Confianza • Apoyo directo',
+                        effects: { stats: { confianza: 10, relaciones: 5 }, charTrust: { daniel: 5, sofia: 5 } },
+                        nextScene: 'scene_3_confront_daniel'
+                    },
+                    {
+                        text: '🤐 "Es mejor no meternos en asuntos ajenos por ahora."',
+                        subtext: '+5 Inteligencia • Mantener perfil bajo',
+                        effects: { stats: { inteligencia: 5, animo: -2 } },
+                        nextScene: 'scene_3_hallway'
+                    }
+                ]
+            },
+
+            'scene_2_cautious': {
+                chapter: 1,
+                location: 'Colegio',
+                speaker: 'sofia',
+                text: 'Bueno... Tienes razón en ser precavida. Se trata de Daniel. Creo que alguien está intentando inculparlo de filtrar un examen del colegio.',
+                choices: [
+                    {
+                        text: '🔍 "Investiguemos discretamente antes de sacar conclusiones."',
+                        subtext: '+8 Inteligencia • Investigación',
+                        effects: { stats: { inteligencia: 8 }, flags: { investigating_exam: true } },
+                        nextScene: 'scene_3_investigate'
+                    },
+                    {
+                        text: '📢 "Deberíamos avisar a Valentina, la presidenta estudiantil."',
+                        subtext: '+8 Popularidad • Reglas e informe',
+                        effects: { stats: { popularidad: 8, relaciones: -3 }, charTrust: { valentina: 10 } },
+                        nextScene: 'scene_3_valentina'
+                    }
+                ]
+            },
+
+            'scene_2_curious': {
+                chapter: 1,
+                location: 'Colegio',
+                speaker: 'sofia',
+                text: '¡Está bien! Hay un rumor corriendo por las redes de que Mateo va a hacer una fiesta sorpresa en el parque, pero sus padres no lo saben.',
+                choices: [
+                    {
+                        text: '🎉 "¡Suena increíble! Contemos conmigo para ir."',
+                        subtext: '+10 Popularidad • Vida social',
+                        effects: { stats: { popularidad: 10, energia: -10 }, charTrust: { mateo: 10 } },
+                        nextScene: 'scene_3_party_prep'
+                    },
+                    {
+                        text: '⚠️ "Suena riesgoso si sus padres no se han enterado."',
+                        subtext: '+5 Rendimiento • Cautela',
+                        effects: { stats: { rendimiento: 5, popularidad: -2 } },
+                        nextScene: 'scene_3_hallway'
+                    }
+                ]
+            },
+
+            'scene_2_avoid': {
+                chapter: 1,
+                location: 'Colegio',
+                speaker: 'profesora',
+                text: 'Buenos días. Veo que llegas muy a tiempo. Hoy repasaremos el proyecto principal del semestre. Es necesario que elijan bien a sus equipos.',
+                choices: [
+                    {
+                        text: '🙋‍♀️ "Profesora, me gustaría liderar uno de los grupos."',
+                        subtext: '+10 Confianza • Requisito Rendimiento ≥ 30',
+                        req: { stat: 'rendimiento', val: 30, text: 'Rendimiento ≥ 30' },
+                        effects: { stats: { rendimiento: 10, confianza: 10, popularidad: 5 }, flags: { project_leader: true } },
+                        nextScene: 'scene_3_hallway'
+                    },
+                    {
+                        text: '👥 "Prefiero unirme al grupo de Mateo y Camila."',
+                        subtext: '+8 Relaciones • Trabajo en equipo',
+                        effects: { stats: { relaciones: 8 }, charTrust: { camila: 8, mateo: 5 } },
+                        nextScene: 'scene_3_hallway'
+                    }
+                ]
+            },
+
+            'scene_3_confront_daniel': {
+                chapter: 1,
+                location: 'Colegio',
+                speaker: 'daniel',
+                text: '¿Eh? ¿De qué están hablando? Ah... vieron la nota. No es lo que piensan. Estoy tratando de ayudar a mi hermano menor con sus tutorías.',
+                choices: [
+                    {
+                        text: '🤍 "Discúlpanos por dudar. ¿Te podemos ayudar en algo?"',
+                        subtext: '+15 Confianza con Daniel',
+                        effects: { stats: { relaciones: 10, confianza: 5 }, charTrust: { daniel: 15 } },
+                        nextScene: 'scene_4_chapter_end'
+                    },
+                    {
+                        text: '💡 "Podríamos organizar un grupo de estudio juntos."',
+                        subtext: '+10 Rendimiento • Inteligencia grupal',
+                        effects: { stats: { rendimiento: 10, inteligencia: 5 } },
+                        nextScene: 'scene_4_chapter_end'
+                    }
+                ]
+            },
+
+            'scene_3_investigate': {
+                chapter: 1,
+                location: 'Biblioteca',
+                speaker: 'lucas',
+                text: '¿Buscando algo en los archivos? He notado que andas haciendo preguntas... Ten cuidado con lo que averiguas en el colegio.',
+                choices: [
+                    {
+                        text: '🤔 "Solo me aseguro de que las cosas se hagan justamente, Lucas."',
+                        subtext: '+8 Confianza • Valentía',
+                        effects: { stats: { confianza: 8, inteligencia: 5 } },
+                        nextScene: 'scene_4_chapter_end'
+                    },
+                    {
+                        text: '📚 "Solo vine a estudiar para la prueba de mañana."',
+                        subtext: '+10 Rendimiento',
+                        effects: { stats: { rendimiento: 10, energia: -5 } },
+                        nextScene: 'scene_4_chapter_end'
+                    }
+                ]
+            },
+
+            'scene_3_valentina': {
+                chapter: 1,
+                location: 'Colegio',
+                speaker: 'valentina',
+                text: 'Agradezco que me lo comentes. La transparencia es clave. Mantengamos esto bajo control antes de que surjan rumores en redes.',
+                choices: [
+                    {
+                        text: '🤝 "Cuentas con mi apoyo para organizar el evento escolar."',
+                        subtext: '+10 Popularidad con Valentina',
+                        effects: { stats: { popularidad: 10 }, charTrust: { valentina: 12 } },
+                        nextScene: 'scene_4_chapter_end'
+                    }
+                ]
+            },
+
+            'scene_3_party_prep': {
+                chapter: 1,
+                location: 'Parque Central',
+                speaker: 'mateo',
+                text: '¡Ey! Qué bueno que viniste. Estamos preparando unos amplificadores para tocar más tarde.',
+                choices: [
+                    {
+                        text: '🎸 "Te ayudo a conectar el equipo de audio."',
+                        subtext: '+10 Relaciones con Mateo',
+                        effects: { stats: { relaciones: 10, animo: 10 }, charTrust: { mateo: 12 } },
+                        nextScene: 'scene_4_chapter_end'
+                    }
+                ]
+            },
+
+            'scene_3_hallway': {
+                chapter: 1,
+                location: 'Colegio',
+                speaker: 'camila',
+                text: 'Hola... Estaba buscando a alguien con quien compartir mis bocetos para el mural de la entrada. ¿Tienes un momento?',
+                choices: [
+                    {
+                        text: '🎨 "¡Claro! Me encantaría ver tus dibujos."',
+                        subtext: '+10 Relación con Camila',
+                        effects: { stats: { relaciones: 8, animo: 8 }, charTrust: { camila: 15 } },
+                        nextScene: 'scene_4_chapter_end'
+                    }
+                ]
+            },
+
+            'scene_4_chapter_end': {
+                chapter: 2,
+                chapterTitle: 'Capítulo 2: Secretos y Susurros',
+                location: 'Cafetería Delicias',
+                speaker: 'sofia',
+                text: 'El primer día estuvo intenso. Hay un grupo de chat del colegio donde alguien publicó una foto sospechosa sobre los exámenes. Todo el mundo está especulando.',
+                choices: [
+                    {
+                        text: '📱 "Publiquemos un mensaje pidiendo calma y madurez."',
+                        subtext: '+10 Popularidad y Confianza',
+                        effects: { stats: { popularidad: 10, confianza: 5, inteligencia: 5 } },
+                        nextScene: 'scene_5_chat_calm'
+                    },
+                    {
+                        text: '🔎 "Revisemos quién compartió la imagen primero."',
+                        subtext: '+10 Inteligencia Detective',
+                        effects: { stats: { inteligencia: 10 }, flags: { rumor_tracker: true } },
+                        nextScene: 'scene_5_investigate_chat'
+                    },
+                    {
+                        text: '☕ "Prefiero concentrarme en disfrutar mi café y descansar."',
+                        subtext: '+15 Energía • Evitar drama',
+                        effects: { stats: { energia: 15, animo: 10 } },
+                        nextScene: 'scene_6_rest'
+                    }
+                ]
+            },
+
+            'scene_5_chat_calm': {
+                chapter: 2,
+                location: 'Cafetería Delicias',
+                speaker: 'valentina',
+                text: 'Vi tu mensaje en el grupo. Muy maduro de tu parte. Mucha gente te tiene respeto ahora en el colegio.',
+                choices: [
+                    {
+                        text: '✨ "Solo intento que tengamos un ambiente positivo."',
+                        subtext: '+10 Popularidad',
+                        effects: { stats: { popularidad: 10, relaciones: 5 } },
+                        nextScene: 'scene_7_chapter3'
+                    }
+                ]
+            },
+
+            'scene_5_investigate_chat': {
+                chapter: 2,
+                location: 'Colegio',
+                speaker: 'lucas',
+                text: 'Veo que estuviste analizando los metadatos de la publicación... Eres más astuta de lo que pensaba.',
+                choices: [
+                    {
+                        text: '💡 "Si trabajamos juntos, resolvemos esto rápido, Lucas."',
+                        subtext: '+12 Inteligencia • Alianza con Lucas',
+                        effects: { stats: { inteligencia: 12 }, charTrust: { lucas: 15 } },
+                        nextScene: 'scene_7_chapter3'
+                    }
+                ]
+            },
+
+            'scene_6_rest': {
+                chapter: 2,
+                location: 'Casa',
+                speaker: 'mama',
+                text: 'Hola mi amor. Te noto un poco pensativa. ¿Cómo te fue hoy en el colegio?',
+                choices: [
+                    {
+                        text: '💬 "Todo bien, mamá. Platiquemos un rato mientras cenamos."',
+                        subtext: '+15 Relación Familiar y Ánimo',
+                        effects: { stats: { relaciones: 10, animo: 15 }, charTrust: { mama: 15 } },
+                        nextScene: 'scene_7_chapter3'
+                    }
+                ]
+            },
+
+            // CAPÍTULO 3 Y POSTERIORES
+            'scene_7_chapter3': {
+                chapter: 3,
+                chapterTitle: 'Capítulo 3: Dilemas y Lealtades',
+                location: 'Colegio',
+                speaker: 'profesora',
+                text: 'Atención clase: Mañana es el examen acumulativo. Representa el 40% de la nota final. Quienes aprueben con excelencia podrán asistir al Foro Cultural.',
+                choices: [
+                    {
+                        text: '📚 "Organizar una maratón de estudio esta tarde en la biblioteca."',
+                        subtext: '+15 Rendimiento • Consume -15 Energía',
+                        effects: { stats: { rendimiento: 15, inteligencia: 10, energia: -15 } },
+                        nextScene: 'scene_8_study'
+                    },
+                    {
+                        text: '🆘 "Mateo necesita ayuda personal urgente. Priorizaré a mi amigo."',
+                        subtext: '+15 Relaciones • Lealtad humana',
+                        effects: { stats: { relaciones: 15, animo: 10, rendimiento: -5 }, charTrust: { mateo: 20 } },
+                        nextScene: 'scene_8_help_mateo'
+                    },
+                    {
+                        text: '💰 "Buscar un trabajo parcial por la tarde para ganar dinero."',
+                        subtext: '+$25.000 Dinero • Consume -20 Energía',
+                        effects: { stats: { dinero: 25000, energia: -20, confianza: 5 } },
+                        nextScene: 'scene_8_work'
+                    }
+                ]
+            },
+
+            'scene_8_study': {
+                chapter: 3,
+                location: 'Biblioteca Pública',
+                speaker: 'lucas',
+                text: 'Nos ha rendido mucho la tarde. Creo que ambos estamos listos para obtener la calificación más alta.',
+                choices: [
+                    {
+                        text: '🌟 "¡Hicimos un gran equipo! Mañana brillaremos."',
+                        subtext: '+10 Confianza • Preparación excelente',
+                        effects: { stats: { confianza: 10, rendimiento: 10 } },
+                        nextScene: 'scene_9_chapter4'
+                    }
+                ]
+            },
+
+            'scene_8_help_mateo': {
+                chapter: 3,
+                location: 'Parque Central',
+                speaker: 'mateo',
+                text: 'No sabes cuánto valoro que vinieras. Estaba dudando si continuar con la música. Tus palabras me dan fuerza.',
+                choices: [
+                    {
+                        text: '🤍 "Nunca dejes de perseguir lo que te apasiona."',
+                        subtext: '+15 Lealtad y Ánimo',
+                        effects: { stats: { relaciones: 10, animo: 15 }, charTrust: { mateo: 20 } },
+                        nextScene: 'scene_9_chapter4'
+                    }
+                ]
+            },
+
+            'scene_8_work': {
+                chapter: 3,
+                location: 'Centro Comercial',
+                speaker: 'valentina',
+                text: 'Te vi trabajando con tanto esfuerzo. Admiro tu independencia y dedicación.',
+                choices: [
+                    {
+                        text: '💪 "Paso a paso construyo mis propias metas."',
+                        subtext: '+10 Confianza personal',
+                        effects: { stats: { confianza: 12, popularidad: 5 } },
+                        nextScene: 'scene_9_chapter4'
+                    }
+                ]
+            },
+
+            'scene_9_chapter4': {
+                chapter: 4,
+                chapterTitle: 'Capítulo 4: Consecuencias',
+                location: 'Colegio',
+                speaker: 'profesora',
+                text: '¡Los resultados de la evaluación están listos! Además, la directiva escolar entregará el reconocimiento al Mérito Juvenil.',
+                choices: [
+                    {
+                        text: '📜 "Revisar los resultados públicamente en el panel de anuncios."',
+                        subtext: 'Avanzar a la resolución final según tus decisiones previa',
+                        effects: { stats: { popularidad: 10, confianza: 10 } },
+                        nextScene: 'scene_10_chapter5'
+                    }
+                ]
+            },
+
+            'scene_10_chapter5': {
+                chapter: 5,
+                chapterTitle: 'Capítulo 5: El día que todo cambió',
+                location: 'Foro Cultural',
+                speaker: 'sofia',
+                text: '¡Mírate! LLegamos hasta este punto. Todas tus decisiones del semestre te han traído aquí. ¿Sientes que aprovechaste cada momento?',
+                choices: [
+                    {
+                        text: '✨ "Definitivamente. Crecí mucho como persona y cuidé a mis amigos."',
+                        subtext: '+15 Confianza y Ánimo',
+                        effects: { stats: { confianza: 15, animo: 15 } },
+                        nextScene: 'scene_11_final_reflection'
+                    },
+                    {
+                        text: '📚 "Me enfocaré en ser una líder brillante en lo académico."',
+                        subtext: '+15 Inteligencia y Rendimiento',
+                        effects: { stats: { inteligencia: 15, rendimiento: 15 } },
+                        nextScene: 'scene_11_final_reflection'
+                    }
+                ]
+            },
+
+            'scene_11_final_reflection': {
+                chapter: 6,
+                chapterTitle: 'Capítulo 6: Tu propia historia',
+                location: 'Centro Comunitario',
+                speaker: 'valentina',
+                text: 'Es momento del discurso de cierre del ciclo. Toda la comunidad del colegio y tu familia están reunidos escuchando.',
+                choices: [
+                    {
+                        text: '🎓 "Dar un discurso emotivo sobre la empatía y la amistad auténtica."',
+                        subtext: 'Evaluar Final Narrativo',
+                        effects: { stats: { relaciones: 15, popularidad: 15 } },
+                        nextScene: 'trigger_ending'
+                    },
+                    {
+                        text: '🚀 "Hablar sobre los retos del futuro, la superación y el conocimiento."',
+                        subtext: 'Evaluar Final Narrativo',
+                        effects: { stats: { inteligencia: 15, confianza: 15 } },
+                        nextScene: 'trigger_ending'
+                    }
+                ]
+            }
+        };
+
+        /* ==========================================================================
+           10 UNIQUE ENDINGS CONFIGURATION
+           ========================================================================== */
+        const ENDINGS_DATA = [
+            {
+                id: 'ending_popular',
+                title: '🌷 La persona que todos quieren cerca',
+                desc: 'Te convertiste en el corazón latente del colegio. Tu empatía, apoyo incondicional y calidez construyeron una red de amistades sinceras que te acompañará para siempre.',
+                check: (s) => s.relaciones >= 75 && s.popularidad >= 70
+            },
+            {
+                id: 'ending_scholar',
+                title: '📚 La estudiante ejemplar',
+                desc: 'Tu disciplina impecable e inteligencia destacada te abrieron las puertas de las mejores oportunidades académicas. Eres un referente de excelencia y perseverancia.',
+                check: (s) => s.rendimiento >= 80 && s.inteligencia >= 75
+            },
+            {
+                id: 'ending_leader',
+                title: '🔥 La Protagonista Inspiradora',
+                desc: 'Con tu alta confianza y carisma sin igual, te convertiste en la líder indiscutible del año. Inspiraste a tus compañeros a romper límites y crear proyectos memorables.',
+                check: (s) => s.confianza >= 80 && s.popularidad >= 75
+            },
+            {
+                id: 'ending_independent',
+                title: '💵 Espíritu Emprendedor e Independiente',
+                desc: 'Lograste un equilibrio perfecto entre finanzas, trabajo y metas personales. Tu capacidad para gestionar recursos y dinero te asegura un futuro brillante.',
+                check: (s) => s.dinero >= 80000
+            },
+            {
+                id: 'ending_peaceful',
+                title: '🌙 Aprender a estar contigo misma',
+                desc: 'Descubriste que la verdadera fuerza no está en agradar a todos, sino en conocerte a ti misma, cultivar tu paz interior y vivir con auténtica tranquilidad.',
+                check: (s) => s.confianza >= 70 && s.animo >= 70
+            },
+            {
+                id: 'ending_friendship',
+                title: '🤍 Amistades para Siempre',
+                desc: 'Guardaste secretos, escuchaste cuando otros callaban y protegiste a quienes querías. Formaste un grupo de amigos leales e inseparables que superará cualquier obstáculo.',
+                check: (s) => s.relaciones >= 85
+            },
+            {
+                id: 'ending_artist',
+                title: '🎨 Alma Libre y Creadora',
+                desc: 'Inspiraste a Camila, Mateo y a toda la comunidad artística con tu sensibilidad visual y entusiasmo creativo. Dejas una huella de color en el colegio.',
+                check: (s) => GameState.characters.camila.trust >= 70 || GameState.characters.mateo.trust >= 70
+            },
+            {
+                id: 'ending_detective',
+                title: '🔎 La Mente Brillante del Año',
+                desc: 'Tu agudeza para resolver conflictos y desentrañar misterios sin caer en el chisme infundado te ganó el respeto mutuo de profesores y compañeros.',
+                check: (s) => s.inteligencia >= 85
+            },
+            {
+                id: 'ending_chaotic',
+                title: '😂 Caos Absoluto pero Divertido',
+                desc: 'Tu etapa fue una montaña rusa de impredecibilidad, risas, dramas resueltos a última hora y anécdotas locas que se contarán por años.',
+                check: (s) => s.animo <= 40 || s.energia <= 30
+            },
+            {
+                id: 'ending_default',
+                title: '💫 La Nueva Etapa',
+                desc: 'Completaste este importante ciclo con vivencias valiosas. Aprendiste que cada decisión cuenta y que estás lista para escribir el siguiente gran capítulo de tu vida.',
+                check: () => true
+            }
+        ];
+
+        /* ==========================================================================
+           RANDOM EVENTS SYSTEM
+           ========================================================================== */
+        const RANDOM_EVENTS = [
+            {
+                title: '🎲 ¡Encuentro Afortunado!',
+                desc: 'Encontraste un billete de $10.000 tirado en el patio del colegio.',
+                apply: (s) => { s.dinero += 10000; UI.showToast('💵 +$10.000 encontrados'); }
+            },
+            {
+                title: '🎲 Examen Sorpresa',
+                desc: 'El profesor anuncia una prueba corta imprevista.',
+                apply: (s) => {
+                    if (s.inteligencia >= 50) {
+                        s.rendimiento += 5;
+                        UI.showToast('📚 ¡Aprobaste con éxito! (+5 Rendimiento)');
+                    } else {
+                        s.energia -= 10;
+                        UI.showToast('⚡ El estrés te resta 10 de Energía');
+                    }
+                }
+            },
+            {
+                title: '🎲 Invitación Inesperada',
+                desc: 'Tus amigos te invitan a tomar un helado sorpresa.',
+                apply: (s) => { s.relaciones += 8; s.animo += 10; UI.showToast('❤️ +8 Relaciones, 😊 +10 Ánimo'); }
+            },
+            {
+                title: '🎲 Publicación viral',
+                desc: 'Subieron una foto divertida tuya a redes con comentarios muy bonitos.',
+                apply: (s) => { s.popularidad += 8; UI.showToast('✨ +8 Popularidad en redes'); }
+            }
+        ];
+
+        /* ==========================================================================
+           GAME STATE MANAGER & SAVE SYSTEM
+           ========================================================================== */
+        const GameState = {
+            hasStarted: false,
+            player: {
+                name: 'Protagonista',
+                age: 16,
+                personality: 'Curiosa',
+                avatarEmoji: '👧',
+                avatarBg: '#fce7f3'
+            },
+            stats: {
+                relaciones: 60,
+                inteligencia: 50,
+                popularidad: 50,
+                confianza: 50,
+                rendimiento: 60,
+                dinero: 50000,
+                energia: 80,
+                animo: 75
+            },
+            level: 1,
+            xp: 0,
+            xpToNext: 100,
+            dayIndex: 0,
+            timeIndex: 0,
+            currentSceneId: 'scene_1',
+            inventory: ['phone', 'backpack'],
+            unlockedAchievements: [],
+            unlockedEndings: [],
+            flags: {},
+            characters: JSON.parse(JSON.stringify(CHARACTERS_DATA)),
+
+            save() {
+                localStorage.setItem('tu_vida_tus_decisiones_save', JSON.stringify(this));
+            },
+
+            load() {
+                const saved = localStorage.getItem('tu_vida_tus_decisiones_save');
+                if (saved) {
+                    try {
+                        const parsed = JSON.parse(saved);
+                        Object.assign(this, parsed);
+                        return true;
+                    } catch (e) {
+                        console.error('Save parse error', e);
+                    }
+                }
+                return false;
+            }
+        };
+
+        /* ==========================================================================
+           CORE GAME ENGINE CONTROLLER
+           ========================================================================== */
+        const Game = {
+            init() {
+                Settings.load();
+                FX.init();
+                const hasSave = GameState.load();
+                if (hasSave && GameState.hasStarted) {
+                    document.getElementById('btn-continue').classList.remove('hidden');
+                }
+            },
+
+            startNewGame() {
+                AudioManager.playClick();
+                FX.spawnBurst();
+                UI.showScreen('screen-char-creator');
+            },
+
+            continueGame() {
+                AudioManager.playClick();
+                UI.showScreen('screen-game');
+                UI.refreshAll();
+            },
+
+            finalizeCharacterCreation(e) {
+                e.preventDefault();
+                AudioManager.playClick();
+
+                const name = document.getElementById('char-name').value.trim() || 'Valentina';
+                const age = parseInt(document.getElementById('char-age').value);
+                const personality = document.getElementById('char-personality').value;
+
+                GameState.player.name = name;
+                GameState.player.age = age;
+                GameState.player.personality = personality;
+                GameState.hasStarted = true;
+
+                FX.spawnConfetti(40);
+                this.unlockAchievement('ach_first');
+
+                GameState.save();
+                UI.showScreen('screen-game');
+                UI.refreshAll();
+                UI.showToast(`✨ ¡Bienvenida a tu historia, ${name}!`);
+            },
+
+            makeChoice(choiceIndex, event) {
+                AudioManager.playClick();
+
+                if (event) {
+                    const rect = event.currentTarget.getBoundingClientRect();
+                    const containerRect = document.getElementById('app-container').getBoundingClientRect();
+                    FX.spawnBurst(rect.left - containerRect.left + rect.width / 2, rect.top - containerRect.top + rect.height / 2, 16);
+                }
+
+                const scene = SCENES_TREE[GameState.currentSceneId];
+                if (!scene || !scene.choices[choiceIndex]) return;
+
+                const choice = scene.choices[choiceIndex];
+
+                if (choice.req) {
+                    const currentVal = GameState.stats[choice.req.stat] || 0;
+                    if (currentVal < choice.req.val) {
+                        UI.showToast(`🔒 Requiere ${choice.req.text}`);
+                        return;
+                    }
+                }
+
+                if (choice.effects) {
+                    if (choice.effects.stats) {
+                        for (let key in choice.effects.stats) {
+                            if (GameState.stats[key] !== undefined) {
+                                GameState.stats[key] = Math.min(100, Math.max(0, GameState.stats[key] + choice.effects.stats[key]));
+                            }
+                        }
+                    }
+
+                    if (choice.effects.charTrust) {
+                        for (let charKey in choice.effects.charTrust) {
+                            if (GameState.characters[charKey]) {
+                                GameState.characters[charKey].trust = Math.min(100, Math.max(0, GameState.characters[charKey].trust + choice.effects.charTrust[charKey]));
+                                if (GameState.characters[charKey].trust >= 90) {
+                                    this.unlockAchievement('ach_friend');
+                                }
+                            }
+                        }
+                    }
+
+                    if (choice.effects.flags) {
+                        Object.assign(GameState.flags, choice.effects.flags);
+                    }
+                }
+
+                this.addXP(25);
+                this.advanceTime(1);
+
+                if (GameState.stats.inteligencia >= 85) this.unlockAchievement('ach_smart');
+                if (GameState.stats.popularidad >= 80) this.unlockAchievement('ach_popular');
+                if (GameState.stats.dinero >= 100000) this.unlockAchievement('ach_rich');
+
+                if (choice.nextScene === 'trigger_ending') {
+                    this.triggerEnding();
+                } else if (SCENES_TREE[choice.nextScene]) {
+                    GameState.currentSceneId = choice.nextScene;
+                    GameState.save();
+                    UI.renderScene();
+                    UI.refreshHUD();
+                } else {
+                    GameState.currentSceneId = 'scene_11_final_reflection';
+                    GameState.save();
+                    UI.renderScene();
+                }
+            },
+
+            addXP(amount) {
+                GameState.xp += amount;
+                if (GameState.xp >= GameState.xpToNext) {
+                    GameState.xp -= GameState.xpToNext;
+                    GameState.level += 1;
+                    GameState.xpToNext = Math.floor(GameState.xpToNext * 1.25);
+                    AudioManager.playAchievement();
+                    FX.spawnConfetti(50);
+                    UI.showToast(`⭐ ¡SUBISTE AL NIVEL ${GameState.level}!`);
+                    if (GameState.level >= 5) this.unlockAchievement('ach_level5');
+                }
+            },
+
+            advanceTime(units = 1) {
+                GameState.timeIndex += units;
+                if (GameState.timeIndex >= TIMES_LIST.length) {
+                    GameState.timeIndex = 0;
+                    GameState.dayIndex = (GameState.dayIndex + 1) % DAYS_LIST.length;
+                    UI.showToast(`📅 Nuevo día: ${DAYS_LIST[GameState.dayIndex]}`);
+                }
+            },
+
+            triggerRandomEvent() {
+                AudioManager.playClick();
+                const rand = RANDOM_EVENTS[Math.floor(Math.random() * RANDOM_EVENTS.length)];
+                rand.apply(GameState.stats);
+                GameState.save();
+                UI.refreshAll();
+            },
+
+            useItem(itemId) {
+                const item = ITEMS_DATA.find(i => i.id === itemId);
+                if (!item || !item.usable) return;
+
+                const idx = GameState.inventory.indexOf(itemId);
+                if (idx > -1) {
+                    GameState.inventory.splice(idx, 1);
+                    if (item.effect) {
+                        for (let k in item.effect) {
+                            if (GameState.stats[k] !== undefined) {
+                                GameState.stats[k] = Math.min(100, GameState.stats[k] + item.effect[k]);
+                            }
+                        }
+                    }
+                    AudioManager.playNotification();
+                    UI.showToast(`✨ Usaste ${item.name}`);
+                    GameState.save();
+                    UI.refreshAll();
+                }
+            },
+
+            unlockAchievement(achId) {
+                if (!GameState.unlockedAchievements.includes(achId)) {
+                    GameState.unlockedAchievements.push(achId);
+                    const ach = ACHIEVEMENTS_DATA.find(a => a.id === achId);
+                    if (ach) {
+                        AudioManager.playAchievement();
+                        UI.showToast(`🏆 ¡LOGRO: ${ach.title}!`);
+                    }
+                    GameState.save();
+                }
+            },
+
+            triggerEnding() {
+                this.unlockAchievement('ach_ending');
+                FX.spawnConfetti(70);
+                
+                let finalEnding = ENDINGS_DATA.find(e => e.check(GameState.stats)) || ENDINGS_DATA[ENDINGS_DATA.length - 1];
+
+                document.getElementById('ending-title').innerText = finalEnding.title;
+                document.getElementById('ending-description').innerText = finalEnding.desc;
+
+                document.getElementById('end-stat-rel').innerText = GameState.stats.relaciones;
+                document.getElementById('end-stat-int').innerText = GameState.stats.inteligencia;
+                document.getElementById('end-stat-pop').innerText = GameState.stats.popularidad;
+                document.getElementById('end-stat-conf').innerText = GameState.stats.confianza;
+                document.getElementById('end-stat-rend').innerText = GameState.stats.rendimiento;
+                document.getElementById('end-stat-mon').innerText = `$${GameState.stats.dinero.toLocaleString()}`;
+
+                UI.showScreen('screen-ending');
+            },
+
+            confirmReset() {
+                if (confirm('¿Estás segura de que deseas reiniciar todo el progreso?')) {
+                    this.resetGameProgress();
+                }
+            },
+
+            resetGameProgress() {
+                localStorage.removeItem('tu_vida_tus_decisiones_save');
+                location.reload();
+            }
+        };
+
+        /* ==========================================================================
+           UI MANAGER & RENDERING ENGINE (WITH ANIMATION ENHANCEMENTS)
+           ========================================================================== */
+        const UI = {
+            typewriterTimer: null,
+
+            showScreen(screenId) {
+                document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+                const target = document.getElementById(screenId);
+                target.classList.remove('hidden');
+                target.classList.add('animate-fade-in');
+            },
+
+            switchTab(tabId) {
+                AudioManager.playClick();
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+                const activeTab = document.getElementById(tabId);
+                activeTab.classList.remove('hidden');
+                activeTab.classList.add('animate-fade-in');
+
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('text-purple-600', 'dark:text-purple-400', 'scale-105');
+                    btn.classList.add('text-slate-400');
+                });
+                const activeNav = document.getElementById(`nav-${tabId}`);
+                if (activeNav) {
+                    activeNav.classList.remove('text-slate-400');
+                    activeNav.classList.add('text-purple-600', 'dark:text-purple-400', 'scale-105');
+                }
+
+                this.refreshTabContent(tabId);
+            },
+
+            updateAvatarPreview({ emoji, bg }) {
+                if (emoji) {
+                    GameState.player.avatarEmoji = emoji;
+                    document.getElementById('avatar-emoji').innerText = emoji;
+                }
+                if (bg) {
+                    GameState.player.avatarBg = bg;
+                    document.getElementById('avatar-preview').style.backgroundColor = bg;
+                }
+            },
+
+            refreshAll() {
+                this.refreshHUD();
+                this.renderScene();
+                this.renderStats();
+                this.renderCharacters();
+                this.renderInventory();
+                this.renderMap();
+                this.renderAchievements();
+            },
+
+            refreshHUD() {
+                document.getElementById('hud-avatar').innerText = GameState.player.avatarEmoji;
+                document.getElementById('hud-avatar').style.backgroundColor = GameState.player.avatarBg;
+                document.getElementById('hud-name').innerText = GameState.player.name;
+                document.getElementById('hud-level').innerText = GameState.level;
+                document.getElementById('hud-xp-text').innerText = `${GameState.xp}/${GameState.xpToNext} XP`;
+                document.getElementById('hud-money').innerText = GameState.stats.dinero.toLocaleString();
+
+                document.getElementById('hud-day').innerText = DAYS_LIST[GameState.dayIndex];
+                document.getElementById('hud-time').innerText = TIMES_LIST[GameState.timeIndex];
+            },
+
+            typewriteText(element, text, speed = 18) {
+                if (this.typewriterTimer) clearInterval(this.typewriterTimer);
+                element.innerText = '';
+                let i = 0;
+                this.typewriterTimer = setInterval(() => {
+                    if (i < text.length) {
+                        element.innerText += text.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(this.typewriterTimer);
+                    }
+                }, speed);
+            },
+
+            renderScene() {
+                const scene = SCENES_TREE[GameState.currentSceneId] || SCENES_TREE['scene_1'];
+
+                document.getElementById('hud-chapter-title').innerText = scene.chapterTitle || `Capítulo ${scene.chapter}`;
+                document.getElementById('hud-location-tag').innerHTML = `<i class="fa-solid fa-location-dot"></i> ${scene.location}`;
+                document.getElementById('story-location-name').innerText = scene.location;
+                document.getElementById('story-subtext').innerText = `${TIMES_LIST[GameState.timeIndex]} • ${DAYS_LIST[GameState.dayIndex]}`;
+
+                const speakerChar = GameState.characters[scene.speaker] || { name: 'Narrador', emoji: '💬', trust: 50 };
+                document.getElementById('dialogue-speaker').innerText = speakerChar.name;
+                document.getElementById('dialogue-avatar').innerText = speakerChar.emoji;
+                document.getElementById('dialogue-rel-badge').innerText = `❤️ ${speakerChar.trust}/100`;
+
+                // Animated Dialogue Reveal
+                const dialogueEl = document.getElementById('dialogue-text');
+                this.typewriteText(dialogueEl, scene.text);
+
+                // Choices Buttons with Staggered Pop-In Animation
+                const container = document.getElementById('choices-container');
+                container.innerHTML = '';
+
+                scene.choices.forEach((choice, idx) => {
+                    let isLocked = false;
+                    let lockText = '';
+
+                    if (choice.req) {
+                        const val = GameState.stats[choice.req.stat] || 0;
+                        if (val < choice.req.val) {
+                            isLocked = true;
+                            lockText = ` (🔒 Requisito: ${choice.req.text})`;
+                        }
+                    }
+
+                    const btn = document.createElement('button');
+                    btn.className = `shimmer-btn w-full text-left p-3.5 rounded-2xl border transition-all duration-300 flex flex-col justify-center animate-pop-in ${
+                        isLocked 
+                        ? 'bg-slate-100 dark:bg-slate-800/40 border-slate-200 dark:border-slate-800 text-slate-400 cursor-not-allowed'
+                        : 'bg-white/90 dark:bg-slate-800/90 border-purple-100 dark:border-slate-700/80 hover:border-purple-400 dark:hover:border-purple-500 shadow-sm hover:shadow-glow hover:scale-[1.01] active:scale-95'
+                    }`;
+                    btn.style.animationDelay = `${idx * 0.09}s`;
+
+                    btn.onclick = (e) => Game.makeChoice(idx, e);
+
+                    btn.innerHTML = `
+                        <div class="font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-100 flex items-center justify-between">
+                            <span>${choice.text}</span>
+                            ${isLocked ? '<i class="fa-solid fa-lock text-slate-400 text-xs"></i>' : '<i class="fa-solid fa-chevron-right text-purple-400 text-xs transition-transform group-hover:translate-x-1"></i>'}
+                        </div>
+                        <div class="text-[11px] font-medium text-purple-600 dark:text-purple-400 mt-1 flex items-center gap-1">
+                            ${choice.subtext}${lockText}
+                        </div>
+                    `;
+
+                    container.appendChild(btn);
+                });
+            },
+
+            renderStats() {
+                const container = document.getElementById('stats-bars-container');
+                container.innerHTML = '';
+
+                for (let statKey in STAT_NAMES) {
+                    const value = GameState.stats[statKey];
+                    const maxVal = statKey === 'dinero' ? 100000 : 100;
+                    const displayVal = statKey === 'dinero' ? `$${value.toLocaleString()}` : `${value}/100`;
+                    const pct = Math.min(100, Math.max(0, (value / maxVal) * 100));
+
+                    container.innerHTML += `
+                        <div class="animate-pop-in">
+                            <div class="flex justify-between items-center text-xs font-bold mb-1">
+                                <span class="text-slate-700 dark:text-slate-200">${STAT_NAMES[statKey]}</span>
+                                <span class="text-purple-600 dark:text-purple-400">${displayVal}</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-purple-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5">
+                                <div class="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-amber-400 rounded-full animated-bar-stripe transition-all duration-700 ease-out" style="width: ${pct}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+
+            renderCharacters() {
+                const container = document.getElementById('characters-list');
+                container.innerHTML = '';
+
+                for (let key in GameState.characters) {
+                    const c = GameState.characters[key];
+                    container.innerHTML += `
+                        <div class="glass-card p-3.5 rounded-2xl flex items-center gap-3 border border-white/60 dark:border-slate-800">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-slate-800 flex items-center justify-center text-2xl shadow-sm flex-shrink-0">
+                                ${c.emoji}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between">
+                                    <h4 class="font-bold text-sm text-slate-800 dark:text-white truncate">${c.name}</h4>
+                                    <span class="text-[11px] font-extrabold text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-950 px-2 py-0.5 rounded-full">
+                                        ❤️ ${c.trust}/100
+                                    </span>
+                                </div>
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">${c.desc}</p>
+                                <div class="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full mt-2 overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-pink-400 to-purple-500 rounded-full" style="width: ${c.trust}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+
+            renderInventory() {
+                const container = document.getElementById('inventory-grid');
+                container.innerHTML = '';
+
+                document.getElementById('inventory-count').innerText = `${GameState.inventory.length}/10`;
+
+                if (GameState.inventory.length === 0) {
+                    container.innerHTML = `<div class="col-span-2 text-center text-xs text-slate-400 py-6">Tu mochila está vacía.</div>`;
+                    return;
+                }
+
+                GameState.inventory.forEach(itemId => {
+                    const item = ITEMS_DATA.find(i => i.id === itemId);
+                    if (!item) return;
+
+                    container.innerHTML += `
+                        <div class="glass-card p-3 rounded-2xl flex flex-col justify-between border border-white/80 dark:border-slate-800">
+                            <div>
+                                <div class="text-3xl mb-1">${item.emoji}</div>
+                                <div class="font-bold text-xs text-slate-800 dark:text-white">${item.name}</div>
+                                <div class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 leading-tight">${item.desc}</div>
+                            </div>
+                            ${item.usable ? `
+                                <button onclick="Game.useItem('${item.id}')" class="mt-3 w-full py-1.5 bg-purple-600 text-white text-xs font-bold rounded-xl shadow-sm hover:bg-purple-700 active:scale-95 transition-all">
+                                    Usar
+                                </button>
+                            ` : `
+                                <span class="mt-3 text-[10px] font-semibold text-slate-400 bg-slate-100 dark:bg-slate-800 py-1 text-center rounded-xl">Equipado</span>
+                            `}
+                        </div>
+                    `;
+                });
+            },
+
+            renderMap() {
+                const container = document.getElementById('map-grid');
+                container.innerHTML = '';
+
+                LOCATIONS_DATA.forEach(loc => {
+                    const isUnlocked = loc.unlocked || GameState.level >= loc.reqLevel;
+
+                    container.innerHTML += `
+                        <div class="glass-card p-3.5 rounded-2xl flex flex-col justify-between border ${isUnlocked ? 'border-purple-200 dark:border-slate-700' : 'opacity-60 border-slate-200 dark:border-slate-800'}">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-3xl">${loc.emoji}</span>
+                                    ${isUnlocked ? '<span class="text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 px-2 py-0.5 rounded-full">Abierto</span>' : `<span class="text-[10px] font-bold bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400 px-2 py-0.5 rounded-full">🔒 Nvl ${loc.reqLevel}</span>`}
+                                </div>
+                                <div class="font-bold text-xs text-slate-800 dark:text-white">${loc.name}</div>
+                                <div class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">${loc.desc}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            },
+
+            renderAchievements() {
+                const container = document.getElementById('achievements-list');
+                container.innerHTML = '';
+
+                ACHIEVEMENTS_DATA.forEach(ach => {
+                    const isUnlocked = GameState.unlockedAchievements.includes(ach.id);
+
+                    container.innerHTML += `
+                        <div class="glass-card p-3 rounded-2xl flex items-center gap-3 border ${isUnlocked ? 'border-amber-200 dark:border-amber-900/40 bg-amber-50/30' : 'opacity-50 border-slate-200 dark:border-slate-800'}">
+                            <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-slate-800 flex items-center justify-center text-xl shadow-sm flex-shrink-0">
+                                ${ach.icon}
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between">
+                                    <h4 class="font-bold text-xs text-slate-800 dark:text-white">${ach.title}</h4>
+                                    ${isUnlocked ? '<span class="text-[10px] font-bold text-amber-600 dark:text-amber-400"><i class="fa-solid fa-check"></i> Obtenido</span>' : '<span class="text-[10px] text-slate-400">🔒 Bloqueado</span>'}
+                                </div>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">${ach.desc}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            },
+
+            refreshTabContent(tabId) {
+                if (tabId === 'tab-story') this.renderScene();
+                if (tabId === 'tab-stats') this.renderStats();
+                if (tabId === 'tab-characters') this.renderCharacters();
+                if (tabId === 'tab-inventory') this.renderInventory();
+                if (tabId === 'tab-map') this.renderMap();
+                if (tabId === 'tab-achievements') this.renderAchievements();
+            },
+
+            showToast(message) {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = 'toast-item glass-panel px-4 py-2.5 rounded-2xl shadow-xl border border-purple-200 dark:border-slate-700 text-xs font-bold text-purple-700 dark:text-purple-300 flex items-center gap-2 badge-pop';
+                toast.innerHTML = message;
+
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+        };
+
+        /* Initialization on DOM Load */
+        window.addEventListener('DOMContentLoaded', () => {
+            Game.init();
+        });
+    </script>
+</body>
+</html>
